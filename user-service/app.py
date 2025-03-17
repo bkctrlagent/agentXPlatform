@@ -23,9 +23,20 @@ async def health():
 @app.post("/users")
 async def create_user(user: UserRequest):
     db = next(get_db())
+    user = User(
+        name=user.name,
+        email=user.email,
+        password=user.password
+    )
     db.add(user)
     db.commit()
     return user
+
+@app.get("/users")
+async def get_users():
+    db = next(get_db())
+    users = db.query(User).all()
+    return users
 
 def register():
     consul = Consul(host='consul', port=8500)

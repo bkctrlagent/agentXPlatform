@@ -54,6 +54,8 @@ services:
       - ./volumes/user-db/data:/var/lib/postgresql/data
     ports:
       - "${EXPOSE_USER_POSTGRES_PORT:-5432}:5432"
+    networks:
+      - ctrl_network
 
   user-service:
     build: ./user-service
